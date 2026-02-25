@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Israr Ahmed | Portfolio</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <noscript>
+        <style>
+            #preloader {
+                display: none !important;
+            }
+        </style>
+    </noscript>
+
+    <style>
+        /* =========================================
+           BASE BRAND VARIABLES
+           ========================================= */
+        :root {
+            --bg-color: #F0EEE9;
+            --text-main: #0A1128;
+            --accent: #D90429;
+
+            --spacing-sm: 5vh;
+            --spacing-md: 10vh;
+            --spacing-lg: 20vh;
+            --grid-gap: 2rem;
+            --page-padding: 4vw;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #0A1128;
+            --text-main: #F0EEE9;
+            --accent: #FF2A50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.4;
+            overflow-x: hidden;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+            cursor: none;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        ::-moz-selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        /* =========================================
+           "IMPERFECT SEQUENCE" PRELOADER
+           ========================================= */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: var(--bg-color);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.8s ease, visibility 0.8s;
+        }
+
+        .loader-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            color: var(--text-main);
+            font-weight: 500;
+            line-height: 1;
+            transition: transform 0.05s, color 0.3s ease;
+        }
+
+        .loader-text.glitch-1 {
+            transform: translate(-4px, 2px) skewX(2deg);
+            opacity: 0.8;
+        }
+
+        .loader-text.glitch-2 {
+            transform: translate(3px, -3px) skewX(-2deg);
+            opacity: 0.9;
+        }
+
+        .loader-text.perfect {
+            transform: translate(0, 0) skewX(0);
+            color: var(--accent);
+            opacity: 1;
+        }
+
+        /* =========================================
+           UI OVERLAYS
+           ========================================= */
+        #custom-cursor {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.2s, height 0.2s, background-color 0.2s, opacity 0.2s;
+            mix-blend-mode: difference;
+            opacity: 1;
+        }
+
+        #custom-cursor.hovered {
+            width: 30px;
+            height: 30px;
+            background-color: #fff;
+        }
+
+        .floating-btn {
+            position: fixed;
+            right: var(--page-padding);
+            z-index: 100;
+            background: var(--bg-color);
+            border: 1px solid var(--text-main);
+            color: var(--text-main);
+            padding: 8px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: all 0.2s ease;
+            cursor: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .floating-btn:hover {
+            background: var(--text-main);
+            color: var(--bg-color);
+        }
+
+        #themeToggle {
+            top: 30px;
+        }
+
+        #backToTop {
+            bottom: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: opacity 0.4s, transform 0.4s, visibility 0.4s;
+        }
+
+        #backToTop.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        #globalCloseDemo {
+            position: fixed;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9000;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s;
+        }
+
+        #globalCloseDemo:hover {
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        #globalCloseDemo.visible {
+            bottom: 40px;
+        }
+
+        /* =========================================
+           TYPOGRAPHY
+           ========================================= */
+        h1,
+        h2,
+        h3,
+        .heading-font {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .huge-text {
+            font-size: clamp(3rem, 8vw, 7rem);
+            line-height: 1;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            letter-spacing: -0.02em;
+        }
+
+        /* 4K MONITOR TEXT CAP */
+        .statement-text {
+            font-size: clamp(1.8rem, 5vw, 4rem);
+            line-height: 1.1;
+            font-weight: 500;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .tiny-text {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            font-weight: 600;
+        }
+
+        .section-label {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+        }
+
+        .accent-text {
+            color: var(--accent);
+        }
+
+        a {
+            color: var(--text-main);
+            text-decoration: none;
+            cursor: none;
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        #globalCloseDemo:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        /* =========================================
+           LAYOUT & COMPARTMENTALIZATION
+           ========================================= */
+        section,
+        footer {
+            width: 100%;
+            min-height: 100vh;
+            padding: var(--spacing-sm) var(--page-padding);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* 4K MONITOR LAYOUT CAP */
+        section:not(.full-bleed),
+        footer:not(.full-bleed) {
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .full-bleed {
+            padding: 0;
+            position: relative;
+            max-width: 100%;
+            margin: 0;
+        }
+
+        .project-divider {
+            width: 100%;
+            max-width: 1600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 1px;
+            background-color: var(--text-main);
+            opacity: 0.15;
+            margin-top: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chapter-heading {
+            margin: var(--spacing-md) 0 2rem 0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            font-weight: 700;
+            color: var(--accent);
+            border-bottom: 1px solid var(--text-main);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(10, 17, 40, 0.7) 0%, rgba(10, 17, 40, 0.2) 100%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .hero-corner {
+            position: absolute;
+            bottom: var(--page-padding);
+            left: var(--page-padding);
+            z-index: 10;
+            color: #fff;
+        }
+
+        .project-title-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            text-align: center;
+            color: #fff;
+            width: 100%;
+        }
+
+        /* =========================================
+           MEDIA, GRIDS & BROWSER UI
+           ========================================= */
+        img,
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background-color: #222;
+        }
+
+        img {
+            transition: filter 0.2s ease-out;
+        }
+
+        @media (hover: hover) {
+            img {
+                filter: grayscale(100%);
+            }
+
+            img:hover {
+                filter: grayscale(0%);
+            }
+        }
+
+        .hero-media {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 1;
+        }
+
+        .tall-media {
+            aspect-ratio: 3 / 4;
+        }
+
+        .square-media {
+            aspect-ratio: 1 / 1;
+        }
+
+        .landscape-media {
+            aspect-ratio: 16 / 9;
+        }
+
+        .editorial-split {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            gap: var(--grid-gap);
+            align-items: center;
+            margin-bottom: var(--grid-gap);
+        }
+
+        .editorial-split-reverse {
+            display: grid;
+            grid-template-columns: 4fr 6fr;
+            gap: var(--grid-gap);
+            align-items: end;
+            margin-bottom: var(--grid-gap);
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--grid-gap);
+            margin-bottom: var(--grid-gap);
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--grid-gap);
+            margin-bottom: var(--grid-gap);
+        }
+
+        .editorial-trio {
+            display: grid;
+            grid-template-columns: 6fr 4fr;
+            grid-template-rows: 1fr 1fr;
+            gap: var(--grid-gap);
+            min-height: 85vh;
+            margin-bottom: var(--grid-gap);
+        }
+
+        .editorial-trio .main-img {
+            grid-column: 1 / 2;
+            grid-row: 1 / 3;
+            height: 100%;
+        }
+
+        .editorial-trio .stacked-img {
+            grid-column: 2 / 3;
+            height: 100%;
+        }
+
+        .browser-frame {
+            width: 100%;
+            border: 1px solid var(--text-main);
+            border-radius: 4px 4px 0 0;
+            overflow: hidden;
+            background: var(--bg-color);
+        }
+
+        .browser-top-bar {
+            height: 28px;
+            border-bottom: 1px solid var(--text-main);
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 6px;
+        }
+
+        .browser-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: 1px solid var(--text-main);
+            opacity: 0.5;
+        }
+
+        .open-new-tab {
+            margin-left: auto;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.65rem;
+            font-weight: 600;
+            color: var(--text-main);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            text-decoration: none;
+            display: none;
+            border: none;
+            transition: color 0.2s;
+            opacity: 0.6;
+        }
+
+        .open-new-tab:hover {
+            color: var(--accent);
+            opacity: 1;
+            border: none;
+        }
+
+        .open-new-tab.visible {
+            display: block;
+        }
+
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            cursor: none;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(10, 17, 40, 0.4);
+            z-index: 5;
+            transition: opacity 0.3s ease;
+            pointer-events: auto;
+        }
+
+        .play-btn-text {
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.5rem;
+            color: #fff;
+            letter-spacing: 0.05em;
+            border: 2px solid #fff;
+            padding: 0.5rem 2rem;
+            border-radius: 2px;
+            backdrop-filter: blur(4px);
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .video-overlay:hover .play-btn-text {
+            background: #fff;
+            color: var(--text-main);
+        }
+
+        .demo-iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 70vh;
+            border: none;
+            border-radius: 0 0 4px 4px;
+            display: block;
+            background-color: #fff;
+        }
+
+        .video-wrapper.demo-active .video-overlay,
+        .video-wrapper.demo-active video {
+            display: none;
+        }
+
+        /* =========================================
+           FOOTER SPECIFIC STYLES
+           ========================================= */
+        .footer-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            gap: 2rem;
+            border-bottom: 1px solid rgba(10, 17, 40, 0.15);
+            padding-bottom: 2rem;
+            width: 100%;
+        }
+
+        [data-theme="dark"] .footer-top-row {
+            border-bottom-color: rgba(240, 238, 233, 0.15);
+        }
+
+        .footer-identity {
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .footer-identity:hover {
+            transform: translateX(5px);
+        }
+
+        .footer-links-container {
+            display: flex;
+            gap: 2.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-link-item {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            position: relative;
+            padding-bottom: 4px;
+        }
+
+        .footer-link-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+
+        .footer-link-item:hover::after {
+            width: 100%;
+        }
+
+        .footer-quote {
+            text-align: center;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(1.2rem, 2vw, 1.5rem);
+            font-weight: 400;
+            opacity: 0.8;
+            letter-spacing: 0.02em;
+        }
+
+        /* =========================================
+           ANIMATIONS & RESPONSIVENESS
+           ========================================= */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 1024px) {
+
+            .editorial-split,
+            .editorial-split-reverse,
+            .grid-4,
+            .grid-3 {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-sm);
+            }
+
+            .editorial-trio {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto;
+                min-height: auto;
+            }
+
+            .editorial-trio .main-img {
+                grid-column: 1 / -1;
+                grid-row: auto;
+                aspect-ratio: 3/4;
+            }
+
+            .editorial-trio .stacked-img {
+                grid-column: 1 / -1;
+                aspect-ratio: 4/3;
+            }
+
+            section,
+            footer {
+                min-height: auto;
+                padding: var(--spacing-md) var(--page-padding);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                cursor: auto;
+            }
+
+            #custom-cursor,
+            #globalCloseDemo {
+                cursor: auto;
+            }
+
+            .floating-btn {
+                top: auto;
+                bottom: 20px;
+                right: var(--page-padding);
+            }
+
+            #themeToggle {
+                top: 20px;
+                bottom: auto;
+            }
+
+            .statement-text {
+                text-align: left;
+            }
+
+            .project-title-center {
+                padding: 0 5vw;
+            }
+
+            .mobile-carousel {
+                display: flex !important;
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                gap: 1rem;
+                padding-bottom: 1rem;
+            }
+
+            .mobile-carousel>* {
+                flex: 0 0 85vw;
+                scroll-snap-align: center;
+                height: 60vh;
+            }
+
+            .demo-iframe {
+                height: 75vh;
+            }
+
+            .footer-top-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3rem;
+            }
+
+            .footer-links-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="loader-text" id="loader-perc">00</div>
+    </div>
+    <div id="custom-cursor"></div>
+
+    <button class="floating-btn" id="themeToggle">Light Mode</button>
+    <button class="floating-btn" id="backToTop">↑ Top</button>
+    <button id="globalCloseDemo">✕ Close Demo</button>
+
+    <main>
+        <section id="page-1" class="full-bleed">
+            <video class="hero-vid hero-media fade-in visible" autoplay loop muted playsinline
+                poster="https://picsum.photos/seed/hero/1920/1080?grayscale">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="hero-corner" style="z-index: 10;">
+                <p class="section-label"
+                    style="font-size: clamp(2rem, 5vw, 4rem); line-height: 1; margin-bottom: 0.5rem;">
+                    PORTFOLIO</p>
+                <p class="tiny-text" style="color: #ffffff; opacity: 0.8; font-size: 1rem;">Visual and Identity Design
+                </p>
+            </div>
+        </section>
+
+        <section id="page-2" class="fade-in" style="min-height: 80vh; align-items: center; justify-content: center;">
+            <h2 class="statement-text">I design <span class="accent-text" style="font-weight: 700;">brand
+                    identities</span>
+                and visual systems that translate strategy into <span class="accent-text"
+                    style="font-weight: 700;">lived
+                    experiences</span>.</h2>
+        </section>
+
+        <div class="project-divider"></div>
+
+        <section class="full-bleed fade-in">
+            <video class="hero-vid hero-media fade-in visible" autoplay loop muted playsinline>
+                <source src="VCR-BG.webm" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="project-title-center">
+                <h2 class="huge-text" style="font-size: clamp(4rem, 12vw, 9rem);">VEENU</h2>
+                <p class="section-label" style="color: #fff; opacity: 0.9;">Cafe and Restaurant</p>
+            </div>
+        </section>
+
+        <section style="padding-top: 0;">
+            <p class="chapter-heading">01 / Visuals</p>
+            <div class="editorial-split-reverse">
+                <div style="display: grid; gap: var(--grid-gap);">
+                    <img loading="lazy" src="https://picsum.photos/seed/v_logo/800/800"
+                        alt="Veenu cafe logo design featuring minimal typography" class="square-media fade-in">
+                    <img loading="lazy" src="https://picsum.photos/seed/v_type/800/800"
+                        alt="Veenu brand typography spread" class="square-media fade-in">
+                </div>
+                <img loading="lazy" src="https://picsum.photos/seed/v_color/1200/1600"
+                    alt="Veenu vibrant brand color palette and abstract patterns" class="tall-media fade-in"
+                    style="aspect-ratio: auto; height: 100%;">
+            </div>
+            <div class="editorial-trio fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/v_menu/1200/1600"
+                    alt="Veenu cafe printed menu design layout" class="main-img">
+                <img loading="lazy" src="https://picsum.photos/seed/v_tent/800/800"
+                    alt="Veenu cafe table tent promotional mockup" class="stacked-img">
+                <img loading="lazy" src="https://picsum.photos/seed/v_bill/800/800"
+                    alt="Veenu brand bill folder presentation" class="stacked-img">
+            </div>
+            <div class="editorial-split fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/v_space/1600/1000"
+                    alt="Veenu cafe exterior signage and storefront" class="landscape-media" style="height: 100%;">
+                <img loading="lazy" src="https://picsum.photos/seed/v_apron/800/1200"
+                    alt="Veenu cafe staff uniform apron design" class="tall-media">
+            </div>
+
+            <p class="chapter-heading">02 / Campaign</p>
+            <div class="grid-4 fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/v_ig1/800/800"
+                    alt="Veenu Instagram social media post layout" class="square-media">
+                <img loading="lazy" src="https://picsum.photos/seed/v_ig2/800/800"
+                    alt="Veenu Instagram promotional content" class="square-media">
+                <img loading="lazy" src="https://picsum.photos/seed/v_ig3/800/800"
+                    alt="Veenu Instagram menu showcase post" class="square-media">
+                <img loading="lazy" src="https://picsum.photos/seed/v_poster/800/800"
+                    alt="Veenu street poster advertising campaign" class="square-media">
+            </div>
+
+            <p class="chapter-heading">03 / Live Demo Website</p>
+            <div class="browser-frame fade-in">
+                <div class="browser-top-bar">
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <a href="https://israrrr.github.io/veenu-demo-website/" target="_blank" rel="noopener noreferrer"
+                        class="open-new-tab">[ ↗ Open in New Tab ]</a>
+                </div>
+                <div class="video-wrapper" data-demo-url="https://israrrr.github.io/veenu-demo-website/">
+                    <div class="video-overlay">
+                        <div class="play-btn-text">LOAD LIVE WEBSITE</div>
+                    </div>
+                    <video autoplay loop muted playsinline class="landscape-media" style="border-radius: 0 0 4px 4px;">
+                        <source src="VCR-Demo.webm" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <div class="project-divider"></div>
+
+        <section class="full-bleed fade-in">
+            <video class="hero-vid hero-media fade-in visible" autoplay loop muted playsinline>
+                <source src="BkGr-BG.webm" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="project-title-center">
+                <h2 class="huge-text" style="font-size: clamp(4rem, 12vw, 9rem);">BAKKENGROW</h2>
+                <p class="section-label" style="color: #fff; opacity: 0.9;">An Asset Management Company</p>
+            </div>
+        </section>
+
+        <section style="padding-top: 0;">
+            <p class="chapter-heading">01 / Visuals</p>
+            <div class="editorial-trio fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/b_logo/1200/1600"
+                    alt="Bakkengrow geometric logo construction and grid" class="main-img">
+                <img loading="lazy" src="https://picsum.photos/seed/b_color/800/800"
+                    alt="Bakkengrow corporate color scheme" class="stacked-img">
+                <img loading="lazy" src="https://picsum.photos/seed/b_type/800/800"
+                    alt="Bakkengrow clean typography hierarchy" class="stacked-img">
+            </div>
+
+            <div class="editorial-split-reverse fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/b_icon/800/1200"
+                    alt="Bakkengrow minimalist app icon design" class="tall-media"
+                    style="width: 100%; height: 100%; justify-self: center; object-fit: contain; background-color: transparent;">
+
+                <img loading="lazy" src="https://picsum.photos/seed/b_dash/1600/1000"
+                    alt="Bakkengrow asset management dashboard user interface" class="landscape-media"
+                    style="height: 100%;">
+            </div>
+
+            <div class="grid-3 fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/b_app/800/1200"
+                    alt="Bakkengrow mobile application screens layout" class="tall-media">
+                <img loading="lazy" src="https://picsum.photos/seed/b_social/800/1200"
+                    alt="Bakkengrow social media announcement post" class="tall-media">
+                <img loading="lazy" src="https://picsum.photos/seed/b_web/800/1200"
+                    alt="Bakkengrow website hero banner design" class="tall-media">
+            </div>
+
+            <p class="chapter-heading">02 / Campaign</p>
+            <div class="grid-4 mobile-carousel fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/b_c1/800/1000"
+                    alt="Bakkengrow campaign carousel slide 1" class="tall-media">
+                <img loading="lazy" src="https://picsum.photos/seed/b_c2/800/1000"
+                    alt="Bakkengrow campaign carousel slide 2" class="tall-media">
+                <img loading="lazy" src="https://picsum.photos/seed/b_c3/800/1000"
+                    alt="Bakkengrow campaign carousel slide 3" class="tall-media">
+                <img loading="lazy" src="https://picsum.photos/seed/b_c4/800/1000"
+                    alt="Bakkengrow campaign call to action" class="tall-media">
+            </div>
+
+            <p class="chapter-heading">03 / Live Demo Website</p>
+            <div class="browser-frame fade-in">
+                <div class="browser-top-bar">
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <a href="https://israrrr.github.io/bakkengrow-demo-website/" target="_blank"
+                        rel="noopener noreferrer" class="open-new-tab">[ ↗ Open in New Tab ]</a>
+                </div>
+                <div class="video-wrapper" data-demo-url="https://israrrr.github.io/bakkengrow-demo-website/">
+                    <div class="video-overlay">
+                        <div class="play-btn-text">LOAD LIVE WEBSITE</div>
+                    </div>
+                    <video autoplay loop muted playsinline class="landscape-media" style="border-radius: 0 0 4px 4px;">
+                        <source src="BkGr-Demo.webm" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <div class="project-divider"></div>
+
+        <section class="full-bleed fade-in">
+            <video class="hero-vid hero-media fade-in visible" autoplay loop muted playsinline>
+                <source src="IS-BG.webm" type="video/mp4">
+            </video>
+            <div class="hero-overlay"></div>
+            <div class="project-title-center">
+                <h2 class="huge-text" style="font-size: clamp(4rem, 12vw, 9rem);">ISRAR STUDIO</h2>
+                <p class="section-label" style="color: #fff; opacity: 0.9;">Nothing Is Imperfect</p>
+            </div>
+        </section>
+
+        <section style="padding-top: 0;">
+            <p class="chapter-heading">01 / Visuals</p>
+            <div class="editorial-split fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/i_logo/1600/1000"
+                    alt="Israr Studio logomark displayed on a structured grid" class="landscape-media"
+                    style="height: 100%;">
+                <div style="display: grid; gap: var(--grid-gap);">
+                    <img loading="lazy" src="https://picsum.photos/seed/i_color/800/800"
+                        alt="Israr Studio monochrome color palette and core typography" class="square-media">
+                    <img loading="lazy" src="https://picsum.photos/seed/i_pattern/800/800"
+                        alt="Israr Studio abstract brand pattern design" class="square-media">
+                </div>
+            </div>
+            <div class="editorial-trio fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/i_prop/1200/1600"
+                    alt="Israr Studio official project proposal document cover" class="main-img">
+                <img loading="lazy" src="https://picsum.photos/seed/i_pitch/800/800"
+                    alt="Israr Studio pitch presentation deck slide" class="stacked-img">
+                <img loading="lazy" src="https://picsum.photos/seed/i_inv/800/800"
+                    alt="Israr Studio branded invoice template" class="stacked-img">
+            </div>
+
+            <p class="chapter-heading">02 / Thought Series</p>
+            <div class="editorial-split fade-in">
+                <img loading="lazy" src="https://picsum.photos/seed/i_case/1200/800"
+                    alt="Israr Studio thought series case study cover graphic" class="landscape-media">
+                <img loading="lazy" src="https://picsum.photos/seed/i_proc/1200/800"
+                    alt="Israr Studio design process explanation slide" class="landscape-media">
+            </div>
+
+            <p class="chapter-heading">03 / Live Demo Website</p>
+            <div class="browser-frame fade-in">
+                <div class="browser-top-bar">
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <div class="browser-dot"></div>
+                    <a href="https://israrrr.github.io/israr-ahmed-portfolio-2025/" target="_blank"
+                        rel="noopener noreferrer" class="open-new-tab">[ ↗ Open in New Tab ]</a>
+                </div>
+                <div class="video-wrapper" data-demo-url="https://israrrr.github.io/israr-ahmed-portfolio-2025/">
+                    <div class="video-overlay">
+                        <div class="play-btn-text">LOAD LIVE WEBSITE</div>
+                    </div>
+                    <video autoplay loop muted playsinline class="landscape-media" style="border-radius: 0 0 4px 4px;">
+                        <source src="IS-demo.webm" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        </section>
+    </main>
+
+    <footer id="page-19" class="fade-in"
+        style="min-height: auto; padding-top: var(--spacing-lg); padding-bottom: var(--spacing-md);">
+
+        <div class="footer-top-row">
+            <div>
+                <a href="#page-1" class="footer-identity">
+                    <h2 class="section-label" style="font-size: 2rem; margin-bottom: 0.2rem; line-height: 1;">Israr
+                        Ahmed</h2>
+                    <p class="tiny-text" style="opacity: 0.6; margin: 0;">Strategy & Visual Identity Design</p>
+                </a>
+            </div>
+
+            <div class="footer-links-container">
+                <a href="mailto:i.israrahmed08@gmail.com" class="footer-link-item">Email</a>
+                <a href="https://www.linkedin.com/in/israr--ahmed/" class="footer-link-item">LinkedIn</a>
+                <a href="https://linktr.ee/israr._.ahmed/" class="footer-link-item">LinkTree</a>
+            </div>
+        </div>
+
+        <div class="footer-quote fade-in">
+            For <span class="accent-text" style="font-weight: 600;">Brand Parents</span>.<br>
+            "If You have a <span class="accent-text" style="font-weight: 600;">Brand</span>.
+            You're raising a <span class="accent-text" style="font-weight: 600;">Child</span>."
+        </div>
+
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // 1. "IMPERFECT SEQUENCE" PRELOADER LOGIC
+            const percEl = document.getElementById('loader-perc');
+            const preloader = document.getElementById('preloader');
+            document.body.style.overflow = 'hidden';
+
+            const stages = [0, 14, 38, 72, 89, 99, 100];
+            let currentStage = 0;
+
+            const loadNext = () => {
+                if (currentStage >= stages.length) return;
+                let val = stages[currentStage];
+                percEl.textContent = val < 10 ? '0' + val : val;
+
+                if (val < 100) {
+                    percEl.className = 'loader-text ' + (Math.random() > 0.5 ? 'glitch-1' : 'glitch-2');
+                    let nextDelay = Math.random() * 300 + 150;
+                    currentStage++;
+                    setTimeout(loadNext, nextDelay);
+                } else {
+                    percEl.className = 'loader-text perfect';
+                    setTimeout(() => {
+                        preloader.style.opacity = '0';
+                        document.body.style.overflow = '';
+                        setTimeout(() => preloader.style.visibility = 'hidden', 800);
+                    }, 600);
+                }
+            };
+            setTimeout(loadNext, 300);
+
+            // 2. CUSTOM CURSOR & BOUNDARY FIX
+            const cursor = document.getElementById('custom-cursor');
+            if (window.matchMedia("(pointer: fine)").matches) {
+                document.addEventListener('mousemove', (e) => {
+                    if (e.clientX >= window.innerWidth - 15) {
+                        cursor.style.opacity = '0';
+                    } else {
+                        cursor.style.opacity = '1';
+                        cursor.style.left = e.clientX + 'px';
+                        cursor.style.top = e.clientY + 'px';
+                    }
+                });
+
+                document.addEventListener('mouseleave', () => { cursor.style.opacity = '0'; });
+                document.addEventListener('mouseenter', () => { cursor.style.opacity = '1'; });
+
+                document.querySelectorAll('a, button, .theme-toggle, .video-overlay, #globalCloseDemo').forEach(el => {
+                    el.addEventListener('mouseenter', () => cursor.classList.add('hovered'));
+                    el.addEventListener('mouseleave', () => cursor.classList.remove('hovered'));
+                });
+            }
+
+            // 3. SCROLL FADE ANIMATIONS
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { root: null, rootMargin: '0px', threshold: 0.10 });
+            document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+            // 4. THEME TOGGLE WITH MEMORY
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+
+            const applyTheme = (theme) => {
+                if (theme === 'dark') {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    themeToggleBtn.textContent = 'Light Mode';
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    themeToggleBtn.textContent = 'Dark Mode';
+                }
+                localStorage.setItem('israrTheme', theme);
+            };
+
+            let savedTheme = localStorage.getItem('israrTheme');
+            let currentTheme = savedTheme ? savedTheme : (prefersDarkScheme.matches ? 'dark' : 'light');
+            applyTheme(currentTheme);
+
+            themeToggleBtn.addEventListener('click', () => {
+                currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+                applyTheme(currentTheme);
+            });
+            prefersDarkScheme.addEventListener('change', (e) => {
+                if (!localStorage.getItem('israrTheme')) applyTheme(e.matches ? 'dark' : 'light');
+            });
+
+            // 5. IFRAME LIVE DEMO LOGIC & FLOATING ESCAPE HATCH
+            const globalCloseBtn = document.getElementById('globalCloseDemo');
+            let currentActiveWrapper = null;
+            let currentActiveTabLink = null;
+
+            document.querySelectorAll('.browser-frame').forEach(frame => {
+                const wrapper = frame.querySelector('.video-wrapper');
+                const tabLink = frame.querySelector('.open-new-tab');
+                if (!wrapper || !wrapper.hasAttribute('data-demo-url')) return;
+
+                const url = wrapper.getAttribute('data-demo-url');
+                const overlay = wrapper.querySelector('.video-overlay');
+
+                overlay.addEventListener('click', () => {
+                    if (wrapper.querySelector('.demo-iframe')) return;
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.className = 'demo-iframe landscape-media';
+
+                    wrapper.appendChild(iframe);
+                    wrapper.classList.add('demo-active');
+                    if (tabLink) tabLink.classList.add('visible');
+
+                    currentActiveWrapper = wrapper;
+                    currentActiveTabLink = tabLink;
+                    globalCloseBtn.classList.add('visible');
+                });
+            });
+
+            globalCloseBtn.addEventListener('click', () => {
+                if (currentActiveWrapper) {
+                    const iframe = currentActiveWrapper.querySelector('.demo-iframe');
+                    if (iframe) iframe.remove();
+                    currentActiveWrapper.classList.remove('demo-active');
+                }
+                if (currentActiveTabLink) {
+                    currentActiveTabLink.classList.remove('visible');
+                }
+                globalCloseBtn.classList.remove('visible');
+                currentActiveWrapper = null;
+                currentActiveTabLink = null;
+            });
+
+            // 6. SMOOTH SCROLL FOR FOOTER ANCHOR
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId && targetId !== '#') {
+                        const target = document.querySelector(targetId);
+                        if (target) {
+                            window.scrollTo({
+                                top: target.offsetTop,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+
+            // 7. MULTIPLE VIDEO PERFORMANCE OPTIMIZER (BUG FIXED)
+            const heroVideos = document.querySelectorAll('.hero-vid');
+            if (heroVideos.length > 0) {
+                const videoObserver = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.play().catch(e => console.log("Autoplay prevented"));
+                        } else {
+                            entry.target.pause();
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                heroVideos.forEach(video => {
+                    videoObserver.observe(video);
+                });
+            }
+
+            // 8. BACK TO TOP BUTTON LOGIC
+            const backToTopBtn = document.getElementById('backToTop');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 500) {
+                    backToTopBtn.classList.add('visible');
+                } else {
+                    backToTopBtn.classList.remove('visible');
+                }
+            });
+            backToTopBtn.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+
+</html>

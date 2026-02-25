@@ -56,7 +56,7 @@
             overflow-x: hidden;
             transition: background-color 0.4s ease, color 0.4s ease;
             -webkit-font-smoothing: antialiased;
-            cursor: none;
+            /* cursor: none REMOVED. Let JS handle this safely! */
         }
 
         ::selection {
@@ -67,6 +67,16 @@
         ::-moz-selection {
             background: var(--accent);
             color: #fff;
+        }
+
+        /* NEW: Safely hides native cursor ONLY if JS succeeds */
+        body.has-custom-cursor,
+        body.has-custom-cursor a,
+        body.has-custom-cursor button,
+        body.has-custom-cursor .floating-btn,
+        body.has-custom-cursor #globalCloseDemo,
+        body.has-custom-cursor .video-wrapper:not(.demo-active) {
+            cursor: none !important;
         }
 
         /* =========================================
@@ -127,7 +137,8 @@
             transform: translate(-50%, -50%);
             transition: width 0.2s, height 0.2s, background-color 0.2s, opacity 0.2s;
             mix-blend-mode: difference;
-            opacity: 1;
+            opacity: 0;
+            /* Starts hidden until JS confirms mouse movement */
         }
 
         #custom-cursor.hovered {
@@ -150,7 +161,6 @@
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: all 0.2s ease;
-            cursor: none;
             backdrop-filter: blur(4px);
         }
 
@@ -193,7 +203,6 @@
             font-weight: 600;
             letter-spacing: 0.05em;
             text-transform: uppercase;
-            cursor: none;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s;
         }
@@ -225,7 +234,6 @@
             letter-spacing: -0.02em;
         }
 
-        /* 4K MONITOR TEXT CAP */
         .statement-text {
             font-size: clamp(1.8rem, 5vw, 4rem);
             line-height: 1.1;
@@ -260,7 +268,6 @@
         a {
             color: var(--text-main);
             text-decoration: none;
-            cursor: none;
             transition: color 0.3s;
         }
 
@@ -289,7 +296,6 @@
             position: relative;
         }
 
-        /* 4K MONITOR LAYOUT CAP */
         section:not(.full-bleed),
         footer:not(.full-bleed) {
             max-width: 1600px;
@@ -508,8 +514,10 @@
         .video-wrapper {
             position: relative;
             width: 100%;
-            height: 100%;
-            cursor: none;
+        }
+
+        .video-wrapper video {
+            height: auto;
         }
 
         .video-overlay {
@@ -643,6 +651,10 @@
             transform: translateY(0);
         }
 
+        .hero-media.fade-in {
+            transform: none;
+        }
+
         @media (max-width: 1024px) {
 
             .editorial-split,
@@ -670,23 +682,19 @@
                 aspect-ratio: 4/3;
             }
 
-            section,
+            section:not(.full-bleed),
             footer {
                 min-height: auto;
                 padding: var(--spacing-md) var(--page-padding);
             }
+
+            section.full-bleed {
+                min-height: 100vh;
+                padding: 0;
+            }
         }
 
         @media (max-width: 768px) {
-            body {
-                cursor: auto;
-            }
-
-            #custom-cursor,
-            #globalCloseDemo {
-                cursor: auto;
-            }
-
             .floating-btn {
                 top: auto;
                 bottom: 20px;
@@ -874,8 +882,7 @@
 
             <div class="editorial-split-reverse fade-in">
                 <img loading="lazy" src="https://picsum.photos/seed/b_icon/800/1200"
-                    alt="Bakkengrow minimalist app icon design" class="tall-media"
-                    style="width: 100%; height: 100%; justify-self: center; object-fit: contain; background-color: transparent;">
+                    alt="Bakkengrow minimalist app icon design" class="tall-media">
 
                 <img loading="lazy" src="https://picsum.photos/seed/b_dash/1600/1000"
                     alt="Bakkengrow asset management dashboard user interface" class="landscape-media"
@@ -1050,9 +1057,16 @@
 
             // 2. CUSTOM CURSOR & BOUNDARY FIX
             const cursor = document.getElementById('custom-cursor');
+
+            // NEW: Only add the class to hide native cursor if we successfully trigger the custom cursor
             if (window.matchMedia("(pointer: fine)").matches) {
+                document.body.classList.add('has-custom-cursor');
+
                 document.addEventListener('mousemove', (e) => {
-                    if (e.clientX >= window.innerWidth - 15) {
+                    // NEW: Keep custom cursor hidden if hovering over an active iframe so it doesn't freeze
+                    if (e.target.closest('.demo-iframe')) {
+                        cursor.style.opacity = '0';
+                    } else if (e.clientX >= window.innerWidth - 15) {
                         cursor.style.opacity = '0';
                     } else {
                         cursor.style.opacity = '1';
@@ -1168,7 +1182,7 @@
                 });
             });
 
-            // 7. MULTIPLE VIDEO PERFORMANCE OPTIMIZER (BUG FIXED)
+            // 7. MULTIPLE VIDEO PERFORMANCE OPTIMIZER
             const heroVideos = document.querySelectorAll('.hero-vid');
             if (heroVideos.length > 0) {
                 const videoObserver = new IntersectionObserver(entries => {
